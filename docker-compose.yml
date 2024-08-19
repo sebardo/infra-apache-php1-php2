@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  apache:
+    build: ./apache
+    image: httpd:latest
+    container_name: apache
+    ports:
+      - "80:80"
+    networks:
+      - webnet
+
+  php-fpm1:
+    image: php:fpm
+    container_name: php-fpm1
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./php-fpm1:/var/www/html
+    networks:
+      - webnet
+
+  php-fpm2:
+    image: php:fpm
+    container_name: php-fpm2
+    ports:
+      - "9001:9000"
+    volumes:
+      - ./php-fpm2:/var/www/html
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge
