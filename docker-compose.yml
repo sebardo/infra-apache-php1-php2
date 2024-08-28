@@ -11,6 +11,7 @@ services:
       - webnet
 
   php-fpm1:
+    build: ./php
     image: php:fpm
     container_name: php-fpm1
     ports:
@@ -21,12 +22,24 @@ services:
       - webnet
 
   php-fpm2:
+    build: ./php
     image: php:fpm
     container_name: php-fpm2
     ports:
       - "9001:9000"
     volumes:
       - ./php-fpm2:/var/www/html
+    networks:
+      - webnet
+
+  vue-app:
+    build: ./node
+    image: vue-app
+    container_name: vue-app
+    volumes:
+      - ./th-front:/app
+    ports:
+      - "8080:8080"
     networks:
       - webnet
 
